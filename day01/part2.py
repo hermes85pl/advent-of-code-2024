@@ -1,4 +1,5 @@
-r1, r2 = set(), {}
+r1: set[int] = set()
+r2: dict[int, int] = {}
 
 with open("input.txt") as f:
     while l := f.readline().strip():

@@ -1,6 +1,7 @@
 from heapq import heappop, heappush
 
-h1, h2 = [], []
+h1: list[int] = []
+h2: list[int] = []
 
 with open("input.txt") as f:
     while l := f.readline().strip():
