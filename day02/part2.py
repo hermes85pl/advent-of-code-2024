@@ -1,13 +1,11 @@
+import sys
+
 from common import safe
 
 total = 0
 
-with open("input.txt") as f:
-    while l := f.readline().strip():
-        levels = [int(x) for x in l.split()]
-        for i in range(len(levels)):
-            if v := safe(levels[:i] + levels[i + 1 :]):
-                total += v
-                break
+while l := sys.stdin.readline():
+    levels = [int(x) for x in l.split()]
+    total += any(safe(levels[:i] + levels[i + 1 :]) for i in range(len(levels)))
 
 assert total == 493
