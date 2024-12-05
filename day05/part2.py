@@ -1,14 +1,11 @@
 import sys
 from functools import cmp_to_key
-from itertools import combinations
+from itertools import combinations, takewhile
 
-rules = set()
-
-for line in sys.stdin:
-    if line == "\n":
-        break
-    a, b = [int(x) for x in line.rstrip().split("|")]
-    rules.add((a, b))
+rules = {
+    tuple(int(x) for x in line.rstrip().split("|"))
+    for line in takewhile(lambda l: l != "\n", sys.stdin)
+}
 
 total = 0
 
