@@ -4,7 +4,7 @@ def setup(m: list[list[int]]):
 
     dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
 
-    def at(pos: tuple[int, int]):
+    def at(pos: tuple[int, int]) -> int:
         return m[pos[0]][pos[1]]
 
     def fits(pos: tuple[int, int]) -> bool:
@@ -20,8 +20,8 @@ def setup(m: list[list[int]]):
                 yield p
 
     def steps(pos: tuple[int, int]):
-        at_pos = at(pos)
-        yield from (x for x in moves(pos) if at(x) - at_pos == 1)
+        val = at(pos)
+        yield from (x for x in moves(pos) if at(x) - val == 1)
 
     def trailheads():
         yield from ((i, j) for i in range(hlen) for j in range(wlen) if m[i][j] == 0)

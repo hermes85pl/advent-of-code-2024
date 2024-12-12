@@ -2,13 +2,13 @@ def setup(m: list[str]):
     hlen = len(m)
     wlen = len(m[0])
 
-    def fits(pos: tuple[int, int]) -> str | None:
+    def at(pos: tuple[int, int]) -> str | None:
         if 0 <= pos[0] < hlen and 0 <= pos[1] < wlen:
             return m[pos[0]][pos[1]]
         return None
 
     return (
-        fits,
+        at,
         next(((i, j) for i in range(hlen) for j in range(wlen) if m[i][j] == "^")),
         (-1, 0),
     )
