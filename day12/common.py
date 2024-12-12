@@ -37,9 +37,7 @@ def setup(m: list[list[int]]):
             vala = abs(at(posa)) if fits(posa) else None
             valb = abs(at(posb)) if fits(posb) else None
             valc = abs(at(posc)) if fits(posc) else None
-            if (vala != val and valb != val) or (
-                vala == val and valb == val and valc != val
-            ):
+            if vala != val != valb or vala == val == valb and valc != val:
                 yield posc
 
     def moves(pos: tuple[int, int]):
