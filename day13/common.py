@@ -4,12 +4,12 @@ from itertools import batched
 
 Point = tuple[int, int]
 
-p = re.compile(r"\d+")
+PATTERN = re.compile(r"\d+")
 
 
 def machines():
     return batched(
-        ((int(v[0]), int(v[1])) for line in sys.stdin if (v := p.findall(line))),
+        ((int(v[0]), int(v[1])) for line in sys.stdin if (v := PATTERN.findall(line))),
         3,
     )
 

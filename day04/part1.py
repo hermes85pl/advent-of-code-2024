@@ -1,11 +1,11 @@
 import re
 import sys
 
-p = re.compile("XMAS")
+PATTERN = re.compile("XMAS")
 
 
 def findcount(s: str) -> int:
-    return len(p.findall(s)) + len(p.findall(s[::-1]))
+    return len(PATTERN.findall(s)) + len(PATTERN.findall(s[::-1]))
 
 
 total = 0

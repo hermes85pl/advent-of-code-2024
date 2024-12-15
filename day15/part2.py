@@ -1,7 +1,9 @@
 import sys
 from itertools import chain, takewhile
 
-widen = {
+DIRS = {"^": (-1, 0), "v": (1, 0), "<": (0, -1), ">": (0, 1)}
+
+WIDER_COUNTERPARTS = {
     "#": "##",
     "O": "[]",
     ".": "..",
@@ -9,7 +11,7 @@ widen = {
 }
 
 m = [
-    list(chain(*[widen[x] for x in line.rstrip()]))
+    list(chain.from_iterable(WIDER_COUNTERPARTS[x] for x in line.rstrip()))
     for line in takewhile(lambda l: l != "\n", sys.stdin)
 ]
 
@@ -19,8 +21,6 @@ hlen = len(m)
 wlen = len(m[0])
 
 pos = next((i, j) for i in range(hlen) for j in range(wlen) if m[i][j] == "@")
-
-dirs = {"^": (-1, 0), "v": (1, 0), "<": (0, -1), ">": (0, 1)}
 
 
 def at(pos: tuple[int, int]) -> str:
@@ -40,29 +40,20 @@ def vertical(dir: tuple[int, int]) -> bool:
 
 
 def box_parts(pos: tuple[int, int]):
-    val = at(pos)
-    yield pos
-    yield move(pos, (0, 1 if val == "[" else -1))
+    return (pos, move(pos, (0, 1 if at(pos) == "[" else -1)))
 
 
 def find_space(pos: tuple[int, int], dir: tuple[int, int]) -> bool:
-    stack = list(box_parts(pos)) if vertical(dir) else [pos]
-    while stack:
-        pos = stack.pop()
+    for pos in box_parts(pos) if vertical(dir) else (pos,):
         new_pos = move(pos, dir)
         new_val = at(new_pos)
-        if new_val == "#":
+        if new_val == "#" or new_val in "[]" and not find_space(new_pos, dir):
             return False
-        if new_val in "[]":
-            if vertical(dir):
-                stack.extend(box_parts(new_pos))
-            else:
-                stack.append(new_pos)
     return True
 
 
 def move_boxes_surely(pos: tuple[int, int], dir: tuple[int, int]) -> None:
-    for pos in box_parts(pos) if vertical(dir) else [pos]:
+    for pos in box_parts(pos) if vertical(dir) else (pos,):
         new_pos = move(pos, dir)
         new_val = at(new_pos)
         if new_val in "[]":
@@ -79,7 +70,7 @@ def move_boxes(pos: tuple[int, int], dir: tuple[int, int]) -> bool:
 
 
 for move_mark in move_marks:
-    dir = dirs[move_mark]
+    dir = DIRS[move_mark]
     new_pos = move(pos, dir)
     new_val = at(new_pos)
     if new_val == "#" or new_val in "[]" and not move_boxes(new_pos, dir):

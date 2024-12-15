@@ -1,12 +1,12 @@
 import re
 import sys
 
-p = re.compile(r"do\(\)|don't\(\)|mul\((\d+),(\d+)\)")
+PATTERN = re.compile(r"do\(\)|don't\(\)|mul\((\d+),(\d+)\)")
 
 enabled = True
 total = 0
 
-for match in p.finditer(sys.stdin.read()):
+for match in PATTERN.finditer(sys.stdin.read()):
     if match[0] == "do()":
         enabled = True
     elif match[0] == "don't()":

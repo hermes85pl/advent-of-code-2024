@@ -1,6 +1,8 @@
 import sys
 from itertools import takewhile
 
+DIRS = {"^": (-1, 0), "v": (1, 0), "<": (0, -1), ">": (0, 1)}
+
 m = [[x for x in line.rstrip()] for line in takewhile(lambda l: l != "\n", sys.stdin)]
 
 move_marks = [x for line in sys.stdin for x in line.rstrip()]
@@ -9,8 +11,6 @@ hlen = len(m)
 wlen = len(m[0])
 
 pos = next((i, j) for i in range(hlen) for j in range(wlen) if m[i][j] == "@")
-
-dirs = {"^": (-1, 0), "v": (1, 0), "<": (0, -1), ">": (0, 1)}
 
 
 def at(pos: tuple[int, int]) -> str:
@@ -46,7 +46,7 @@ def move_boxes(pos: tuple[int, int], dir: tuple[int, int]) -> bool:
 
 
 for move_mark in move_marks:
-    dir = dirs[move_mark]
+    dir = DIRS[move_mark]
     new_pos = move(pos, dir)
     new_val = at(new_pos)
     if new_val == "#" or new_val == "O" and not move_boxes(new_pos, dir):

@@ -1,8 +1,9 @@
+DIRS = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
+
 def setup(m: list[list[int]]):
     hlen = len(m)
     wlen = len(m[0])
-
-    dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
 
     def at(pos: tuple[int, int]) -> int:
         return m[pos[0]][pos[1]]
@@ -14,7 +15,7 @@ def setup(m: list[list[int]]):
         return (pos[0] + dir[0], pos[1] + dir[1])
 
     def moves(pos: tuple[int, int]):
-        for dir in dirs:
+        for dir in DIRS:
             p = move(pos, dir)
             if fits(p):
                 yield p

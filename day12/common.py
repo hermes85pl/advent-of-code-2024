@@ -1,11 +1,11 @@
 from typing import Callable
 
+DIRS = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
 
 def setup(m: list[list[int]]):
     hlen = len(m)
     wlen = len(m[0])
-
-    dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
 
     def at(pos: tuple[int, int]) -> int:
         return m[pos[0]][pos[1]]
@@ -20,16 +20,16 @@ def setup(m: list[list[int]]):
         return (pos[0] + dir[0], pos[1] + dir[1])
 
     def walls(pos: tuple[int, int], val: int):
-        for dir in dirs:
+        for dir in DIRS:
             p = move(pos, dir)
             if not fits(p) or abs(at(p)) != val:
                 yield p
 
     def corners(pos: tuple[int, int], val: int):
-        dirslen = len(dirs)
+        dirslen = len(DIRS)
         for i in range(dirslen):
-            dira = dirs[i]
-            dirb = dirs[(i + 1) % dirslen]
+            dira = DIRS[i]
+            dirb = DIRS[(i + 1) % dirslen]
             dirc = move(dira, dirb)
             posa = move(pos, dira)
             posb = move(pos, dirb)
@@ -41,7 +41,7 @@ def setup(m: list[list[int]]):
                 yield posc
 
     def moves(pos: tuple[int, int]):
-        for dir in dirs:
+        for dir in DIRS:
             p = move(pos, dir)
             if fits(p):
                 yield p

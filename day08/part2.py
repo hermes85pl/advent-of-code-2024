@@ -2,7 +2,7 @@ import re
 import sys
 from collections import defaultdict
 
-p = re.compile(r"[0-9A-Za-z]")
+PATTERN = re.compile(r"[0-9A-Za-z]")
 
 antenas: dict[str, list[tuple[int, int]]] = defaultdict(lambda: [])
 
@@ -13,7 +13,7 @@ for i, line in enumerate(sys.stdin):
     hlen += 1
     wlen = max(wlen, len(line))
     for j, c in enumerate(line):
-        if p.match(c):
+        if PATTERN.match(c):
             antenas[c].append((i, j))
 
 

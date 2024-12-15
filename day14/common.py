@@ -7,11 +7,11 @@ YMAX = 103
 XMID = XMAX // 2
 YMID = YMAX // 2
 
-p = re.compile(r"(-?\d+),(-?\d+)")
+PATTERN = re.compile(r"(-?\d+),(-?\d+)")
 
 
 def robots():
-    return ([(int(x), int(y)) for x, y in p.findall(line)] for line in sys.stdin)
+    return ([(int(x), int(y)) for x, y in PATTERN.findall(line)] for line in sys.stdin)
 
 
 def place(pos: tuple[int, int], vel: tuple[int, int], t: int) -> tuple[int, int]:
