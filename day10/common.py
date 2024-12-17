@@ -1,3 +1,5 @@
+Point = tuple[int, int]
+
 DIRS = ((0, 1), (1, 0), (0, -1), (-1, 0))
 
 
@@ -5,22 +7,22 @@ def setup(m: list[list[int]]):
     hlen = len(m)
     wlen = len(m[0])
 
-    def at(pos: tuple[int, int]) -> int:
+    def at(pos: Point) -> int:
         return m[pos[0]][pos[1]]
 
-    def fits(pos: tuple[int, int]) -> bool:
+    def fits(pos: Point) -> bool:
         return 0 <= pos[0] < hlen and 0 <= pos[1] < wlen
 
-    def move(pos: tuple[int, int], dir: tuple[int, int]) -> tuple[int, int]:
+    def move(pos: Point, dir: Point) -> Point:
         return (pos[0] + dir[0], pos[1] + dir[1])
 
-    def moves(pos: tuple[int, int]):
+    def moves(pos: Point):
         for dir in DIRS:
             p = move(pos, dir)
             if fits(p):
                 yield p
 
-    def steps(pos: tuple[int, int]):
+    def steps(pos: Point):
         val = at(pos)
         yield from (x for x in moves(pos) if at(x) - val == 1)
 

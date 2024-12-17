@@ -1,14 +1,6 @@
-import sys
-from itertools import takewhile
+from common import execute, load
 
-from common import execute
-
-registries = [
-    int(line.rstrip().rpartition(" ")[2])
-    for line in takewhile(lambda l: l != "\n", sys.stdin)
-]
-
-program = [int(x) for x in sys.stdin.readline().rstrip().partition(" ")[2].split(",")]
+registries, program = load()
 
 output_str = ",".join(str(x) for x in execute(program, registries))
 

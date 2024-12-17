@@ -5,9 +5,7 @@ Point = tuple[int, int]
 DIRS = ((0, 1), (1, 0), (0, -1), (-1, 0))
 
 
-def setup():
-    m = [line.rstrip() for line in sys.stdin]
-
+def setup(m: list[str]):
     def at(pos: Point) -> str:
         return m[pos[0]][pos[1]]
 

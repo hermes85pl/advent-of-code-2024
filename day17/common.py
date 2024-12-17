@@ -1,6 +1,20 @@
+import sys
+from itertools import takewhile
+
 A = 0
 B = 1
 C = 2
+
+
+def load():
+    registries = [
+        int(line.rstrip().rpartition(" ")[2])
+        for line in takewhile(lambda l: l != "\n", sys.stdin)
+    ]
+    program = [
+        int(x) for x in sys.stdin.readline().rstrip().partition(" ")[2].split(",")
+    ]
+    return registries, program
 
 
 def combo_operand(operand: int, registries: list[int]) -> int:

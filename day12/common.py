@@ -1,5 +1,7 @@
 from typing import Callable
 
+Point = tuple[int, int]
+
 DIRS = ((0, 1), (1, 0), (0, -1), (-1, 0))
 
 
@@ -7,51 +9,28 @@ def setup(m: list[list[int]]):
     hlen = len(m)
     wlen = len(m[0])
 
-    def at(pos: tuple[int, int]) -> int:
+    def at(pos: Point) -> int:
         return m[pos[0]][pos[1]]
 
-    def put(pos: tuple[int, int], val: int) -> None:
+    def put(pos: Point, val: int) -> None:
         m[pos[0]][pos[1]] = val
 
-    def fits(pos: tuple[int, int]) -> bool:
+    def fits(pos: Point) -> bool:
         return 0 <= pos[0] < hlen and 0 <= pos[1] < wlen
 
-    def move(pos: tuple[int, int], dir: tuple[int, int]) -> tuple[int, int]:
+    def move(pos: Point, dir: Point) -> Point:
         return (pos[0] + dir[0], pos[1] + dir[1])
 
-    def walls(pos: tuple[int, int], val: int):
-        for dir in DIRS:
-            p = move(pos, dir)
-            if not fits(p) or abs(at(p)) != val:
-                yield p
-
-    def corners(pos: tuple[int, int], val: int):
-        dirslen = len(DIRS)
-        for i in range(dirslen):
-            dira = DIRS[i]
-            dirb = DIRS[(i + 1) % dirslen]
-            dirc = move(dira, dirb)
-            posa = move(pos, dira)
-            posb = move(pos, dirb)
-            posc = move(pos, dirc)
-            vala = abs(at(posa)) if fits(posa) else None
-            valb = abs(at(posb)) if fits(posb) else None
-            valc = abs(at(posc)) if fits(posc) else None
-            if vala != val != valb or vala == val == valb and valc != val:
-                yield posc
-
-    def moves(pos: tuple[int, int]):
+    def moves(pos: Point):
         for dir in DIRS:
             p = move(pos, dir)
             if fits(p):
                 yield p
 
-    def steps(pos: tuple[int, int], val: int):
+    def steps(pos: Point, val: int):
         yield from (x for x in moves(pos) if at(x) == val)
 
-    def price(
-        pos: tuple[int, int], countwalls=Callable[[tuple[int, int], int], int]
-    ) -> int:
+    def price(pos: Point, countwalls=Callable[[Point, int], int]) -> int:
         stack = [pos]
         cell_count = 0
         wall_count = 0
@@ -68,4 +47,4 @@ def setup(m: list[list[int]]):
     def plots():
         yield from ((i, j) for i in range(hlen) for j in range(wlen) if m[i][j] > 0)
 
-    return plots, price, corners, walls
+    return at, fits, move, plots, price

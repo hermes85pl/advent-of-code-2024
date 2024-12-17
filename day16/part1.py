@@ -1,8 +1,9 @@
+import sys
 from heapq import heappop, heappush
 
 from common import Point, setup
 
-at, locate, move, turn = setup()
+at, locate, move, turn = setup([line.rstrip() for line in sys.stdin])
 
 pos = locate("S")
 

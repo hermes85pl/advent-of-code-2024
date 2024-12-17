@@ -1,15 +1,15 @@
 import sys
 
-from common import move, setup, turn
+from common import Point, move, setup, turn
 
 at, pos, dir = setup([line.rstrip() for line in sys.stdin])
 
 
 def findloop(
-    pos: tuple[int, int],
-    dir: tuple[int, int],
-    obstacle: tuple[int, int],
-    figures: set[tuple[tuple[int, int], tuple[int, int]]],
+    pos: Point,
+    dir: Point,
+    obstacle: Point,
+    figures: set[tuple[Point, Point]],
 ) -> bool:
     figures = set(figures)
     while True:

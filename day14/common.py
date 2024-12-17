@@ -1,6 +1,8 @@
 import re
 import sys
 
+Point = tuple[int, int]
+
 XMAX = 101
 YMAX = 103
 
@@ -14,7 +16,7 @@ def robots():
     return ([(int(x), int(y)) for x, y in PATTERN.findall(line)] for line in sys.stdin)
 
 
-def place(pos: tuple[int, int], vel: tuple[int, int], t: int) -> tuple[int, int]:
+def place(pos: Point, vel: Point, t: int) -> Point:
     return (
         (pos[0] + vel[0] * t) % XMAX,
         (pos[1] + vel[1] * t) % YMAX,

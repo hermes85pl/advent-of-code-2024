@@ -1,31 +1,18 @@
 import sys
 from itertools import takewhile
 
-DIRS = {"^": (-1, 0), "v": (1, 0), "<": (0, -1), ">": (0, 1)}
+from common import DIRS, Point, setup
 
 m = [[x for x in line.rstrip()] for line in takewhile(lambda l: l != "\n", sys.stdin)]
 
 move_marks = [x for line in sys.stdin for x in line.rstrip()]
 
-hlen = len(m)
-wlen = len(m[0])
+at, locate, locateall, move, put = setup(m)
 
-pos = next((i, j) for i in range(hlen) for j in range(wlen) if m[i][j] == "@")
-
-
-def at(pos: tuple[int, int]) -> str:
-    return m[pos[0]][pos[1]]
+pos = locate("@")
 
 
-def put(pos: tuple[int, int], val: str) -> None:
-    m[pos[0]][pos[1]] = val
-
-
-def move(pos: tuple[int, int], dir: tuple[int, int]) -> tuple[int, int]:
-    return (pos[0] + dir[0], pos[1] + dir[1])
-
-
-def find_space(pos: tuple[int, int], dir: tuple[int, int]) -> tuple[int, int] | None:
+def find_space(pos: Point, dir: Point) -> Point | None:
     while True:
         pos = move(pos, dir)
         val = at(pos)
@@ -37,7 +24,7 @@ def find_space(pos: tuple[int, int], dir: tuple[int, int]) -> tuple[int, int] | 
     return None
 
 
-def move_boxes(pos: tuple[int, int], dir: tuple[int, int]) -> bool:
+def move_boxes(pos: Point, dir: Point) -> bool:
     if new_pos := find_space(pos, dir):
         put(new_pos, "O")
         put(pos, ".")
@@ -53,6 +40,6 @@ for move_mark in move_marks:
         continue
     pos = new_pos
 
-total = sum(100 * i + j for i in range(hlen) for j in range(wlen) if at((i, j)) == "O")
+total = sum(100 * i + j for i, j in locateall("O"))
 
 assert total == 1552879

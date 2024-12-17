@@ -1,7 +1,7 @@
 import sys
 from itertools import chain, takewhile
 
-DIRS = {"^": (-1, 0), "v": (1, 0), "<": (0, -1), ">": (0, 1)}
+from common import DIRS, Point, setup
 
 WIDER_COUNTERPARTS = {
     "#": "##",
@@ -17,33 +17,20 @@ m = [
 
 move_marks = [x for line in sys.stdin for x in line.rstrip()]
 
-hlen = len(m)
-wlen = len(m[0])
+at, locate, locateall, move, put = setup(m)
 
-pos = next((i, j) for i in range(hlen) for j in range(wlen) if m[i][j] == "@")
-
-
-def at(pos: tuple[int, int]) -> str:
-    return m[pos[0]][pos[1]]
+pos = locate("@")
 
 
-def put(pos: tuple[int, int], val: str) -> None:
-    m[pos[0]][pos[1]] = val
-
-
-def move(pos: tuple[int, int], dir: tuple[int, int]) -> tuple[int, int]:
-    return (pos[0] + dir[0], pos[1] + dir[1])
-
-
-def vertical(dir: tuple[int, int]) -> bool:
+def vertical(dir: Point) -> bool:
     return dir[0] != 0
 
 
-def box_parts(pos: tuple[int, int]):
+def box_parts(pos: Point):
     return (pos, move(pos, (0, 1 if at(pos) == "[" else -1)))
 
 
-def find_space(pos: tuple[int, int], dir: tuple[int, int]) -> bool:
+def find_space(pos: Point, dir: Point) -> bool:
     for pos in box_parts(pos) if vertical(dir) else (pos,):
         new_pos = move(pos, dir)
         new_val = at(new_pos)
@@ -52,7 +39,7 @@ def find_space(pos: tuple[int, int], dir: tuple[int, int]) -> bool:
     return True
 
 
-def move_boxes_surely(pos: tuple[int, int], dir: tuple[int, int]) -> None:
+def move_boxes_surely(pos: Point, dir: Point) -> None:
     for pos in box_parts(pos) if vertical(dir) else (pos,):
         new_pos = move(pos, dir)
         new_val = at(new_pos)
@@ -62,7 +49,7 @@ def move_boxes_surely(pos: tuple[int, int], dir: tuple[int, int]) -> None:
         put(pos, ".")
 
 
-def move_boxes(pos: tuple[int, int], dir: tuple[int, int]) -> bool:
+def move_boxes(pos: Point, dir: Point) -> bool:
     if find_space(pos, dir):
         move_boxes_surely(pos, dir)
         return True
@@ -77,6 +64,6 @@ for move_mark in move_marks:
         continue
     pos = new_pos
 
-total = sum(100 * i + j for i in range(hlen) for j in range(wlen) if at((i, j)) == "[")
+total = sum(100 * i + j for i, j in locateall("["))
 
 assert total == 1561175

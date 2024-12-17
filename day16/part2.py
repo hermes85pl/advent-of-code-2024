@@ -1,6 +1,8 @@
+import sys
+
 from common import DIRS, Point, setup
 
-at, locate, move, turn = setup()
+at, locate, move, turn = setup([line.rstrip() for line in sys.stdin])
 
 pos = locate("S")
 

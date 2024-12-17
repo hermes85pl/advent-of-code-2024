@@ -1,11 +1,11 @@
 import sys
 
-from common import setup
+from common import Point, setup
 
 at, steps, trailheads = setup([[int(x) for x in line.rstrip()] for line in sys.stdin])
 
 
-def score(pos: tuple[int, int]):
+def score(pos: Point):
     visited = set()
     queue = [pos]
     score = 0

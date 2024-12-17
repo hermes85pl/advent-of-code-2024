@@ -1,7 +1,7 @@
-from common import XMAX, XMID, YMAX, YMID, place, robots
+from common import XMAX, XMID, YMAX, YMID, Point, place, robots
 
 
-def distance_from_the_center(pos: tuple[int, int]) -> float:
+def distance_from_the_center(pos: Point) -> float:
     return abs(pos[0] - XMID) + abs(pos[1] - YMID)
 
 

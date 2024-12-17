@@ -1,24 +1,6 @@
-import re
-import sys
-from collections import defaultdict
+from common import bootstrap
 
-PATTERN = re.compile(r"[0-9A-Za-z]")
-
-antenas: dict[str, list[tuple[int, int]]] = defaultdict(lambda: [])
-
-hlen = 0
-wlen = 0
-for i, line in enumerate(sys.stdin):
-    line = line.rstrip()
-    hlen += 1
-    wlen = max(wlen, len(line))
-    for j, c in enumerate(line):
-        if PATTERN.match(c):
-            antenas[c].append((i, j))
-
-
-def fits(pos: tuple[int, int]) -> bool:
-    return 0 <= pos[0] < hlen and 0 <= pos[1] < wlen
+antenas, fits = bootstrap()
 
 
 def move(pos: tuple[int, int], dir: tuple[int, int]):
