@@ -1,12 +1,12 @@
 import sys
 from itertools import islice
 
-from common import END, START, findpathlen
+from common import END, OFFSET, START, findpathlen
 
-blocks = set(
+blocks = {
     (int(x), int(y))
-    for x, y in (line.rstrip().split(",") for line in islice(sys.stdin, 1024))
-)
+    for x, y in (line.rstrip().split(",") for line in islice(sys.stdin, OFFSET))
+}
 
 steps = findpathlen(START, END, blocks)
 

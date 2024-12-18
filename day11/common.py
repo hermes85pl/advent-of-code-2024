@@ -17,15 +17,14 @@ def setup():  # -> Callable[..., int]:# -> Callable[..., int]:
 
     def blinknlen(stone: int, count: int) -> int:
         key = (stone, count)
-        try:
+        if key in memory:
             return memory[key]
-        except KeyError:
-            result = (
-                sum(1 for _ in _blink1(stone))
-                if count == 1
-                else sum(blinknlen(x, count - 1) for x in _blink1(stone))
-            )
-            memory[key] = result
-            return result
+        result = (
+            sum(1 for _ in _blink1(stone))
+            if count == 1
+            else sum(blinknlen(x, count - 1) for x in _blink1(stone))
+        )
+        memory[key] = result
+        return result
 
     return blinknlen

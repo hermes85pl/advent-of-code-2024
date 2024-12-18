@@ -6,6 +6,7 @@ DIRS = ((0, 1), (1, 0), (0, -1), (-1, 0))
 QLEN = 71
 START = (0, 0)
 END = (QLEN - 1, QLEN - 1)
+OFFSET = 1024
 
 
 def findpathlen(start: Point, end: Point, blocks: set[Point]) -> int | None:
