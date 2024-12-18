@@ -16,6 +16,8 @@ This repository contains solutions to the [Advent of Code 2024](https://adventof
 
 - Solving each problem in a reasonable amount of time.
 
+- Answering each part of the puzzle in a separate run.
+
 ## What was out of scope
 
 - Providing the most performant or optimized solution.
