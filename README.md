@@ -26,4 +26,6 @@ This repository contains solutions to the [Advent of Code 2024](https://adventof
 
 - Avoiding code duplication or sticking to a convention.
 
+- Reducing the number of lines or characters in the code.
+
 (If any of the above is fulfilled, it is simply by chance or by habit.)
