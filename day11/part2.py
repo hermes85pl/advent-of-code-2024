@@ -1,8 +1,6 @@
 import sys
 
-from common import setup
-
-blinknlen = setup()
+from common import blinknlen
 
 stones = [int(x) for x in sys.stdin.read().split()]
 
