@@ -1,5 +1,3 @@
-import sys
-
 Point = tuple[int, int]
 
 DIRS = ((0, 1), (1, 0), (0, -1), (-1, 0))

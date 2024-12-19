@@ -1,5 +1,3 @@
-from itertools import takewhile
-
 Point = tuple[int, int]
 
 DIRS = {"^": (-1, 0), "v": (1, 0), "<": (0, -1), ">": (0, 1)}
