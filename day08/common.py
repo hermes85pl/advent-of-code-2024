@@ -6,7 +6,7 @@ PATTERN = re.compile(r"[0-9A-Za-z]")
 
 
 def bootstrap():
-    antenas = defaultdict(lambda: [])
+    antenas = defaultdict(list)
 
     hlen = 0
     wlen = 0
