@@ -10,9 +10,9 @@ MAX_FILL = 5
 keys: list[Schema] = []
 locks: list[Schema] = []
 
-for diagram in sys.stdin.read().split("\n\n"):
-    lock = diagram[0] == FILL_CHAR
-    m = diagram.splitlines()[1:-1]
+while diagram := list(takewhile(lambda l: l != "\n", sys.stdin)):
+    lock = diagram[0][0] == FILL_CHAR
+    m = diagram[1:-1]
     rows = m if lock else m[::-1]
     schema: Schema = tuple(
         sum(1 for _ in takewhile(lambda r: r[i] == FILL_CHAR, rows))
