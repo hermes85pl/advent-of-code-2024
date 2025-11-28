@@ -1,24 +1,42 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -eu -o pipefail
 
 TIMEFORMAT='%R'
-DAY=${1:-day*}
+DAYS=${1:-day*}
 FAILURERET=${2:-}
 
 rundaypart() {
-    if [ -f "$1"/"$2".py ]; then
-        echo -n "Running $1 $2... "
+    local dir=$1
+    local part=$2
+    local input_file=$3
+    local script_file=$dir/$part.py
+
+    if [ -f "$script_file" ]; then
+        echo -n "Running $dir $part... "
+        local t
         t=$({
-            time python -Bbb "$1"/"$2".py <"$1"/input.txt || return "${FAILURERET:-$?}"
+            time python -Bbb "$script_file" <"$input_file" || return "${FAILURERET:-$?}"
         } 2>&1)
         echo "${t}s"
     else
-        echo "Missing $1 $2"
+        echo "Missing $dir $part"
     fi
 }
 
-for day in $DAY; do
-    rundaypart "${day}" part1
-    rundaypart "${day}" part2
+runday() {
+    local dir=$1
+    local input_file=$dir/input.txt
+
+    if [ ! -f "$input_file" ]; then
+        echo "Missing $dir input"
+        return
+    fi
+
+    rundaypart "$dir" part1 "$input_file"
+    rundaypart "$dir" part2 "$input_file"
+}
+
+for day in $DAYS; do
+    runday "$day"
 done
