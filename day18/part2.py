@@ -12,6 +12,8 @@ further_blocks = [
     (int(x), int(y)) for x, y in (line.rstrip().split(",") for line in sys.stdin)
 ]
 
+mid = None
+
 lo = 0
 hi = len(further_blocks) - 1
 while lo < hi:
@@ -22,6 +24,7 @@ while lo < hi:
     else:
         lo = mid + 1
 
+assert mid is not None
 block = further_blocks[mid]
 
 answer = f"{block[0]},{block[1]}"
