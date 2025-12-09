@@ -1,10 +1,15 @@
 import re
 import sys
-from itertools import batched
+from itertools import islice
 
 Point = tuple[int, int]
 
 PATTERN = re.compile(r"\d+")
+
+
+def batched(iterable, n):
+    while batch := tuple(islice(iter(iterable), n)):
+        yield batch
 
 
 def machines():
